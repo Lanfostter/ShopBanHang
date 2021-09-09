@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+<body>
+<h1 th:text="#{employee.list}"></h1>
+<p>-------------------------------</p>
+<!--@{""} = truyền đường dẫn-->
+<!--${""} = truyền giá trị-->
+<!--#{""} = truyền message-->
+<table>
+    <tr>
+        <th th:text="#{employee.id}"></th>
+        <th th:text="#{employee.name}"></th>
+        <th th:text="#{employee.age}"></th>
+        <th th:text="#{employee.type}"></th>
+    </tr>
+    <tr th:each="emp : ${employeesList}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.age}"></td>
+        <!--        phân loại -->
+        <td th:if="${emp.age &gt;= 20}" th:text="#{employee.old}"></td>
+        <td th:if="${emp.age &lt 20}" th:text="#{employee.young}"></td>
+    </tr>
+</table>
+<p>__________________________________</p>
+<!--    them moi 1 employee-->
+<form th:action="@{/addNewEmployee}" th:object="${employees}" th:method="post">
+    <label>Name</label>
+    <input th:field="*{name}" th:type="text"/>
+    <label>Age</label>
+    <input th:field="*{age}" th:type="text"/>
+    <input th:type="submit" value="Submit"/>
+</form>
+<!--<img th:src="@{/img/milky-way-2695569_1920.jpg}" alt=""/>-->
+<form th:action="@{/deleteEmployee}" th:object="${employees}" th:method="post">
+    <input th:field="*{id}" th:type="text"/>
+    <input th:type="submit" value="Submit"/>
+</form>
+</body>
+</html>
